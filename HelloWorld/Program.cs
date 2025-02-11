@@ -13,45 +13,36 @@ namespace HelloWorld
             // Replace with the title of the window you want to hide
             string windowTitle = Console.Title = "Hello, World!";
             IntPtr hWnd = NativeMethods.FindWindow(null, windowTitle);
-
-            if (hWnd != IntPtr.Zero)
-            {
-                // Hide the window
-                NativeMethods.ShowWindow(hWnd, ShowWindowCommands.SW_HIDE);
-                Console.WriteLine($"The window '{windowTitle}' is now hidden.");
-                NativeMethods.ShowWindow(hWnd, ShowWindowCommands.SW_SHOW);
-                Console.WriteLine($"The window '{windowTitle}' is now shown.");
-            }
-            else
-            {
-                Console.WriteLine($"Window with title '{windowTitle}' not found.");
-            }
+            HideShowWindow();
 
             Process[] processes = Process.GetProcessesByName("VsDebugConsole");
             if (processes.Length > 0)
             {
                 Process proc = processes[0];
                 hWnd = proc.MainWindowHandle;
+                HideShowWindow();
             }
             else
             {
                 Console.WriteLine("Process not found.");
             }
 
-            if (hWnd != IntPtr.Zero)
-            {
-                // Hide the window
-                NativeMethods.ShowWindow(hWnd, ShowWindowCommands.SW_HIDE);
-                Console.WriteLine($"The window '{windowTitle}' is now hidden.");
-                NativeMethods.ShowWindow(hWnd, ShowWindowCommands.SW_SHOW);
-                Console.WriteLine($"The window '{windowTitle}' is now shown.");
-            }
-            else
-            {
-                Console.WriteLine($"Window with title '{windowTitle}' not found.");
-            }
-
             Console.WriteLine("Hello, World!");
+            void HideShowWindow()
+            {
+                if (hWnd != IntPtr.Zero)
+                {
+                    // Hide the window
+                    NativeMethods.ShowWindow(hWnd, ShowWindowCommands.SW_HIDE);
+                    Console.WriteLine($"The window '{windowTitle}' is now hidden.");
+                    NativeMethods.ShowWindow(hWnd, ShowWindowCommands.SW_SHOW);
+                    Console.WriteLine($"The window '{windowTitle}' is now shown.");
+                }
+                else
+                {
+                    Console.WriteLine($"Window with title '{windowTitle}' not found.");
+                }
+            }
         }
     }
     public static class ShowWindowCommands
